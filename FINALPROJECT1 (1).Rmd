@@ -83,6 +83,8 @@ From the variables that this analysis explored, there may be a possible correlat
 
 Hoen, B.D., Diffendorfer, J.E., Rand, J.T., Kramer, L.A., Garrity, C.P., and Hunt, H.E., 2018, United States Wind Turbine Database (ver. 5.1, August 2022): U.S. Geological Survey, American Clean Power (ACP) Association, and Lawrence Berkeley National Laboratory data release, https://doi.org/10.5066/F7TX3DN0.
 
+Hoen, B.D., Diffendorfer, J.E., Rand, J.T., Kramer, L.A., Garrity, C.P., and Hunt, H.E., 2018, United States Wind Turbine Database (ver. 5.1, August 2022): U.S. Geological Survey, American Clean Power (ACP) Association, and Lawrence Berkeley National Laboratory data release, https://doi.org/10.5066/F7TX3DN0.
+
 
 Utility-scale wind energy. WINDExchange. (n.d.). Retrieved September 23, 2022, from https://windexchange.energy.gov/markets/utility-scale 
 
