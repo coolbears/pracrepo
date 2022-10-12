@@ -1,0 +1,90 @@
+---
+title: "Utility Wind Turbine Variable Analysis"
+author: "Sreya Das"
+date: "`r Sys.Date()`"
+output: html_document
+---
+# Introduction
+
+This dataset was retrieved from The Open PV Project which is an interdisciplinary project that aims to provide a database of publicly available data for photovoltaic installation data in the United States. This dataset focuses exclusively on wind turbines and the subset of utility-scale turbines, typically larger projects than an “at-home” wind turbine project. All of the wind turbines in the dataset follow quality control standards. The relationship that this paper will be exploring is whether the turbine’s capacity electrical generation capacity of the turbine measured in megawatts (outcome variable), was affected, if at all, by Turbine’s Total Height (m), Turbine’s Hub Height(m), and the Year in which the turbine project was completed. Turbine capacity is essentially the maximum amount of electrical energy a turbine can create. 
+
+![Depiction of An Utility Turbine Dimensions and Type of Turbine in the Dataset](C:\Users\sreya\Downloads\SDS 313\turbine5.png)
+
+```{r global_options, echo=FALSE}
+knitr::opts_chunk$set(warning=FALSE, tidy=TRUE, echo=FALSE, tidy.opts=list(width.cutoff=60))
+library(ggplot2)
+```
+
+```{R echo=FALSE}
+turbine2<-read.csv("turbine.csv")
+bw_ggplot <- ggplot(turbine2)
+```
+
+```{R echo=FALSE}
+bw_ggplot +geom_histogram(aes(x=Turbine.Capacity), fill='aquamarine4',alpha=.5, binwidth=250, position='identity')+ labs(title='Distribution of Turbine Capacity',subtitle = 'The Distribution of Turbine Electrical Generation Capacity Turbine in Kilo-Watts', x='Turbine Capacity(KW)',y='Distribution of Turbine Capacity')+ theme(plot.title = element_text(face = "bold"))+geom_vline(xintercept = mean(turbine2$Turbine.Capacity),col = "darkorchid4", lwd = 1)+
+  annotate("text", x =mean(turbine2$Turbine.Capacity)* 1.6,y = mean(turbine2$Turbine.Capacity) * 1.7, label = paste("Mean =", round(mean(turbine2$Turbine.Capacity),digits=3)),col = "darkorchid4",size = 3)+geom_vline(xintercept = median(turbine2$Turbine.Capacity),col = "cadetblue", lwd = 1)+
+  annotate("text", x =median(turbine2$Turbine.Capacity)* 1.6,y = median(turbine2$Turbine.Capacity) * 5, label = paste("Median =", round(median(turbine2$Turbine.Capacity),digits=3)),col = "cadetblue",size = 3)
+```
+
+
+
+
+# Analysis of the Distribution of Turbine Capacity in (KW)
+
+
+
+
+The distribution of Turbine Capacity appears fairly symmetrical. Furthermore the mean of `r round(mean(turbine2$Turbine.Capacity),digits=3)` being fairly close to the median of `r round(median(turbine2$Turbine.Capacity),digits=3)` further suggests that the data is symmetrical. The turbine capacity distribution also appears to have one peak, thus being unimodal. The data also has a standard deviation of `r round(sd(turbine2$Turbine.Capacity),digits=3)`. This suggests that the electrical energy capacity of each turbine is usually between plus or minus `r round(sd(turbine2$Turbine.Capacity),digits=3)` of the mean. 
+
+
+```{R echo=FALSE}
+bw_ggplot+geom_point(aes(x=Turbine.Hub_Height,y=Turbine.Capacity),colour="coral1") + labs(title='The Effect of Turbine Hub Height on Turbine Capacity',subtitle = 'The Turbine Hub Height and the Effect on Electrical Generation Capacity of the Turbine', x='Turbine Hub Height(m)',y='Turbine Capacity(KW)')+ theme(plot.title = element_text(face = "bold"))
+```
+
+
+
+
+
+
+# Analysis of Hub Height (m) and the Turbine Capacity(KW)
+
+
+
+There appears to be a somewhat strong positive correlation between Turbine Hub Height and Turbine Capacity as seen by the correlation coefficient of `r round(cor(turbine2$Turbine.Hub_Height,turbine2$Turbine.Capacity),digits=3)` that is close to one. 
+
+```{R echo=FALSE}
+bw_ggplot+geom_point(aes(x=Year,y=Turbine.Capacity),color='darkseagreen') + labs(title="Year Completed and its Effect on Turbine Capacity", x='Year',y='Turbine Capacity(KW)')+ theme(plot.title = element_text(face = "bold"))
+```
+
+
+
+
+
+# Analysis of the Relationship Between Year of Completion and the Turbine Capacity
+
+
+
+ There appears to be somewhat of a strong positive correlation between the turbine’s year of completion and the Turbine Capacity. This can be observed through the correlation coefficient of `r round(cor(turbine2$Year,turbine2$Turbine.Capacity),digits=3)` which is close to one. 
+
+
+```{R echo=FALSE}
+bw_ggplot+geom_point(aes(x=Turbine.Total_Height,y=Turbine.Capacity),color='coral4') + labs(title="The Effect of The Turbine's Total Height on Turbine Capacity",subtitle = 'Vertical Height of a Turbine and its Effect on Electrical Generation Capacity', x='Turbine Total Height(m)',y='Turbine Capacity(KW)')+ theme(plot.title = element_text(face = "bold"))
+```
+
+# Analysis of the Relationship Between the Turbine's Total Height and the Turbine
+
+There appears to be somewhat of a strong positive correlation between Turbine Total Height and the Turbine Capacity. This can be observed through the correlation coefficient of `r round(cor(turbine2$Turbine.Total_Height,turbine2$Turbine.Capacity),digits=3)` which is close to one.
+
+# Conclusion
+
+From the variables that this analysis explored, there may be a possible correlation between turbine hub height and turbine capacity, the turbine year of completion and turbine capacity, and the turbine total height and turbine capacity. The distribution of the turbine capacity also appears to be symmetrical with no apparent outliers. This data may suggest that as the year completion became more recent (Ex: from 1990 to 2020), the utility turbine may have been created to produce a higher turbine capacity as seen through the relatively strong correlation coefficient of `r round(cor(turbine2$Year,turbine2$Turbine.Capacity),digits=3)`. Subsequent research may be conducted to see whether there may be another possible reason for the apparent strong correlation: a recent advent in windmill production and technology. In addition, since the was also a moderately strong positive correlation between the dimensions of the Turbine like the total height and the hub height, a cost analysis may be done to observe whether increasing these metrics to have a higher turbine capacity is cost-effective. In addition, a possible energy analysis should be done to also explore whether producing larger dimensions for possible Higher Turbine Capacity is effective in conserving energy.
+
+# References
+
+Hoen, B.D., Diffendorfer, J.E., Rand, J.T., Kramer, L.A., Garrity, C.P., and Hunt, H.E., 2018, United States Wind Turbine Database (ver. 5.1, August 2022): U.S. Geological Survey, American Clean Power (ACP) Association, and Lawrence Berkeley National Laboratory data release, https://doi.org/10.5066/F7TX3DN0.
+
+
+Utility-scale wind energy. WINDExchange. (n.d.). Retrieved September 23, 2022, from https://windexchange.energy.gov/markets/utility-scale 
+
+
+Wind turbines CSV file. CORGIS Datasets Project. (n.d.). Retrieved September 23, 2022, from https://think.cs.vt.edu/corgis/csv/wind_turbines/ 
